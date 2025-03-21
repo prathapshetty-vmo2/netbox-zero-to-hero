@@ -3,9 +3,9 @@ from django.utils.text import slugify
 
 from dcim.choices import DeviceStatusChoices, SiteStatusChoices
 from dcim.models import Device, DeviceRole, DeviceType, Site
-from netbox_netseg_automation.models import NetSegVrf
+from netbox_netseg_automation.models import SegmentVrf
 
-class NewVrfScript(Script):
+class NewSegmentVrfScript(Script):
 
     class Meta:
         name = "New Vrf"
@@ -17,17 +17,17 @@ class NewVrfScript(Script):
     vpn_id = IntegerVar(
         description="VPN ID"
      )
-    bgp_as =IntegerVar(
-        description="BGP AS"
-     )
+    # bgp_as =IntegerVar(
+    #     description="BGP AS"
+    #  )
    
     def run(self, data, commit):
 
         # Create the new site
-        vrf = NetSegVrf(
+        vrf = SegmentVrf(
             name=data['vrf_name'],
-            vrf_vpn_id=data['vpn_id'],
-            bgp_as=data['bgp_as']
+            vrf_vpn_id=data['vpn_id']
+           
            
         )
         vrf.save()
