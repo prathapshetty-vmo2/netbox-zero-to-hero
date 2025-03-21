@@ -17,16 +17,17 @@ class NewVrfScript(Script):
     vpn_id = IntegerVar(
         description="VPN ID"
      )
-    # site_name = StringVar(
-    #     description="Name of the Site"
-    #  )
+    bgp_as =IntegerVar(
+        description="BGP AS"
+     )
    
     def run(self, data, commit):
 
         # Create the new site
         vrf = NetSegVrf(
             name=data['vrf_name'],
-            vrf_vpn_id=data['vpn_id']            
+            vrf_vpn_id=data['vpn_id'],
+            bgp_as=data['bgp_as']
            
         )
         vrf.save()
