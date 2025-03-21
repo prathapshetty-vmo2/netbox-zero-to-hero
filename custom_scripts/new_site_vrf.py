@@ -26,8 +26,7 @@ class NewVrfScript(Script):
         # Create the new site
         vrf = NetSegVrf(
             name=data['vrf_name'],
-            vrf_vpn_id=data['vpn_id'],
-            slug=slugify(data['vrf_name']),
+            vrf_vpn_id=data['vpn_id']            
            
         )
         vrf.save()
