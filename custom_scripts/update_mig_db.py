@@ -16,7 +16,7 @@ class ImportDeviceMigrations(Script):
     )
 
     def run(self, data, commit):
-        csv_data = data["csv_file"].read().decode("utf-8")
+        csv_data = data["csv_file"].read().decode("utf-8-sig")
         reader = csv.DictReader(io.StringIO(csv_data))
 
         created = 0
