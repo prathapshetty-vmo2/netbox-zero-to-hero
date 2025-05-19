@@ -20,10 +20,11 @@ class ImportDeviceMigrations(Script):
         reader = csv.DictReader(io.StringIO(csv_data))
 
         created = 0
+        print(reader)
         for row in reader:
             # Clean empty strings to None
             cleaned_row = {k: (v.strip() if v.strip() else None) for k, v in row.items()}
-
+            print(cleaned_row)
             # Create and save DeviceMigration instance
             migration = DeviceMigration(
                 site=cleaned_row["site"],
