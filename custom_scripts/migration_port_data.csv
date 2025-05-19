@@ -1,0 +1,14 @@
+site,pe_hostname,vrf,pe_interface,ip_address,dns_record,mac_address,sw_hostname,sw_vlan,sw_interface,sw_port_status,sw_int_desc,tcap_ref,migration_type,mac_vendor_name,tsa_vendor_vrf,tsa_vendor_vlan,new_ipaddress,dns_A_record_update
+mnct1,mxxx-pe-1a,V20:MBN,BVI25,10.20.17.119, mxxx-abcd-svr-01.uk.pri.sss.com,xxxx.xxxx.xxxx,mxxx-cat6-3a,25,Gi1/1,up, mxxx-abcd-svr-01.uk.pri.sss.com,1234,address_change,Cisco,OAM:JUNOS,212,10.10.10.1/24,yes/no
+mnct1,mxxx-pe-1a,V20:MBN,BVI25,10.20.17.120, mxxx-abcd-svr-01.uk.pri.sss.com,xxxx.xxxx.xxxx,mxxx-cat6-3a,25,Gi1/2,up, mxxx-abcd-svr-01.uk.pri.sss.com,1234,,,,,,
+mnct1,mxxx-pe-1a,V20:MBN,BVI25,10.20.17.121, mxxx-abcd-svr-01.uk.pri.sss.com,xxxx.xxxx.xxxx,mxxx-cat6-3a,25,Gi1/3,up, mxxx-abcd-svr-01.uk.pri.sss.com,1234,,,,,,
+mnct1,mxxx-pe-1a,V20:MBN,BVI25,10.20.17.122, mxxx-abcd-svr-01.uk.pri.sss.com,xxxx.xxxx.xxxx,mxxx-cat6-3a,25,Gi1/4,up, mxxx-abcd-svr-01.uk.pri.sss.com,1234,,,,,,
+mnct1,mxxx-pe-1a,V20:MBN,BVI25,10.20.17.123, mxxx-abcd-svr-01.uk.pri.sss.com,xxxx.xxxx.xxxx,mxxx-cat6-3a,25,Gi1/5,up, mxxx-abcd-svr-01.uk.pri.sss.com,1234,,,,,,
+mnct1,mxxx-pe-1a,V20:MBN,BVI25,10.20.17.124, mxxx-abcd-svr-01.uk.pri.sss.com,xxxx.xxxx.xxxx,mxxx-cat6-3a,25,Gi1/6,up, mxxx-abcd-svr-01.uk.pri.sss.com,1234,,,,,,
+mnct1,mxxx-pe-1a,V20:MBN,BVI25,10.20.17.125, mxxx-abcd-svr-01.uk.pri.sss.com,xxxx.xxxx.xxxx,mxxx-cat6-3a,25,Gi1/7,up, mxxx-abcd-svr-01.uk.pri.sss.com,1234,,,,,,
+mnct1,mxxx-pe-1a,V20:MBN,BVI25,10.20.17.126, mxxx-abcd-svr-01.uk.pri.sss.com,xxxx.xxxx.xxxx,mxxx-cat6-3a,25,Gi1/8,up, mxxx-abcd-svr-01.uk.pri.sss.com,1234,,,,,,
+mnct1,mxxx-pe-1a,V20:MBN,BVI25,10.20.17.127, mxxx-abcd-svr-01.uk.pri.sss.com,xxxx.xxxx.xxxx,mxxx-cat6-3a,25,Gi1/9,up, mxxx-abcd-svr-01.uk.pri.sss.com,1234,,,,,,
+mnct1,mxxx-pe-1a,V20:MBN,BVI25, , , ,mxxx-cat6-3a,25,Gi1/10,down, , ,,,,,,
+mnct1,mxxx-pe-1a,V20:MBN,BVI25,10.20.17.129, mxxx-abcd-svr-01.uk.pri.sss.com,xxxx.xxxx.xxxx,mxxx-cat6-3a,25,Gi1/11,up, mxxx-abcd-svr-01.uk.pri.sss.com,1234,,,,,,
+mnct1,mxxx-pe-1a,V20:MBN,BVI25,10.20.17.130, mxxx-abcd-svr-01.uk.pri.sss.com,xxxx.xxxx.xxxx,mxxx-cat6-3a,25,Gi1/12,up, mxxx-abcd-svr-01.uk.pri.sss.com,1234,,,,,,
+mnct1,mxxx-pe-1a,V20:MBN,BVI25,10.20.17.131, mxxx-abcd-svr-01.uk.pri.sss.com,xxxx.xxxx.xxxx,mxxx-cat6-3a,25,Gi1/13,up, mxxx-abcd-svr-01.uk.pri.sss.com,1234,,,,,,
