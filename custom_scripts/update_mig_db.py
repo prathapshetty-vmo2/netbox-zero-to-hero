@@ -39,13 +39,13 @@ class ImportDeviceMigrations(Script):
                 sw_interface=cleaned_row["interface"],
                 sw_port_status=cleaned_row["status"],
                 sw_int_desc=cleaned_row["description"],
-                tcap_ref=cleaned_row["tcap_ref"],
-                migration_type=cleaned_row["migration_type"],
-                mac_vendor_name=cleaned_row["vendor"],
-                tsa_vendor_vrf=cleaned_row["tsa_vendor_vrf"],
-                tsa_vendor_vlan=cleaned_row["tsa_vendor_vlan"],
-                new_ipaddress=cleaned_row["new_ipaddress"],
-                dns_A_record_update=cleaned_row["dns_A_record_update"],
+                # tcap_ref=cleaned_row["tcap_ref"],
+                # migration_type=cleaned_row["migration_type"],
+                # mac_vendor_name=cleaned_row["vendor"],
+                # tsa_vendor_vrf=cleaned_row["tsa_vendor_vrf"],
+                # tsa_vendor_vlan=cleaned_row["tsa_vendor_vlan"],
+                # new_ipaddress=cleaned_row["new_ipaddress"],
+                # dns_A_record_update=cleaned_row["dns_A_record_update"],
             )
 
             migration.save()
