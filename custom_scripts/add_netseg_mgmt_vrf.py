@@ -144,8 +144,6 @@ class NewManagementVrfScript(Script):
             mgmt_vrf_instance.vrf_spoke_sites.set(data['vrf_spoke_sites'])
         
         self.log_success(f"new Mgmt VRF {mgmt_vrf_instance.vrf_name} instance is created")
-        
-
 
         hub1_vrf_instance = HubSiteVrf.objects.create(
              vrf_name=mgmt_vrf_instance,
@@ -154,6 +152,6 @@ class NewManagementVrfScript(Script):
              inter_vdom_subnet=data['vdom_subnet'],
              vdom_loopback=data['vdom_loopback'],
              deployment_status=data['deployment_status']
-)
+            )
            
         self.log_success(f"New Mgmt VRF {hub1_vrf_instance.vrf_name} is created for site - {hub1_vrf_instance.hub_site}")
