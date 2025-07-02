@@ -151,8 +151,8 @@ class NewManagementVrfScript(Script):
              vrf_name=mgmt_vrf_instance,
              hub_site=data['priority_one_hub_site'],
              vrf_to_vdom_subnet=data['vrf_subnet'],
-             inter_vdom_subnet= data['vdom_subnet'],
-             vdom_loopback= data['vdom_loopback'],
+             inter_vdom_subnet=data['vdom_subnet'],
+             vdom_loopback=data['vdom_loopback'],
              deployment_status=data['deployment_status']
 )
            
