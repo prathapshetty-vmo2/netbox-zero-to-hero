@@ -101,13 +101,13 @@ class NewManagementVrfScript(Script):
         )
 
         self.log_success(f"VRF {vrf.name} created")
-
+        spoke_sites = data['vrf_spoke_sites']
         mgmt_vrf_instance =  ManagementVrf.objects.create(
             vrf_name=vrf,
             priority_one_hub_site=data['priority_one_hub_site'],
             priority_two_hub_site=data['priority_two_hub_site'],
             priority_three_hub_site=data['priority_three_hub_site'],
-            vrf_spoke_sites=data['vrf_spoke_sites'],
+            vrf_spoke_sites=spoke_sites.set(),
             deployment_status=data['deployment_status'],
            
            
