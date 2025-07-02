@@ -116,15 +116,16 @@ class NewManagementVrfScript(Script):
     deployment_status =  StringVar(
         description="Add status"
     )
-    vrf_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vrf_to_vdom_subnet")
-    vdom_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "inter_vdom_subnet")
-    vdom_loopback=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vdom_loopback")
+  
 
     def run(self, data, commit):
         # Access selected site
         # selected_site = data['site']
 
         # Create the new VRF and associate it with the selected site
+        vrf_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vrf_to_vdom_subnet")
+        vdom_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "inter_vdom_subnet")
+        vdom_loopback=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vdom_loopback")
         vrf = SegmentVrf.objects.create(
             name=data['vrf_name'],
             vrf_vpn_id=data['vpn_id'],
@@ -148,9 +149,9 @@ class NewManagementVrfScript(Script):
         hub1_vrf_instance = HubSiteVrf.objects.create(
              vrf_name=mgmt_vrf_instance,
              hub_site=data['priority_one_hub_site'],
-             vrf_to_vdom_subnet=data['vrf_subnet'],
-             inter_vdom_subnet=data['vdom_subnet'],
-             vdom_loopback=data['vdom_loopback'],
+             vrf_to_vdom_subnet= vrf_subnet,
+             inter_vdom_subnet=vdom_subnet,
+             vdom_loopback=vdom_loopback,
              deployment_status=data['deployment_status']
             )
            
