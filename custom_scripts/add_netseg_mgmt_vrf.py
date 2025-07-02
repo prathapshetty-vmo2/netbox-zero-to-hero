@@ -100,8 +100,7 @@ class NewManagementVrfScript(Script):
            
         )
 
-        self.log_success(f"VRF {vrf.name} created")
-        spoke_sites = data['vrf_spoke_sites']
+        self.log_success(f"VRF {vrf.name} created")         
         mgmt_vrf_instance =  ManagementVrf.objects.create(
             vrf_name=vrf,
             priority_one_hub_site=data['priority_one_hub_site'],
@@ -119,7 +118,7 @@ class NewManagementVrfScript(Script):
 
 
         hub1_vrf_instance =  ManagementVrf.objects.create(
-            vrf_name=mgmt_vrf_instance,
+            vrf_name=vrf,
             hub_site=data['priority_one_hub_site'],
             vrf_to_vdom_subnet = get_next_available_prefix(NETBOX_URL, PARENT_PREFIX_ID, PREFIX_LENGTH, DESCRIPTION),
             inter_vdom_subnet =  get_next_available_prefix(NETBOX_URL, PARENT_PREFIX_ID, PREFIX_LENGTH, DESCRIPTION),  
