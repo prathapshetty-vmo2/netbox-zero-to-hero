@@ -1,5 +1,7 @@
 from extras.scripts import *
 # from dcim.models import Site
+from ipam.models import Prefix
+import os
 from netbox_netseg_automation.models import ManagementVrf, NetSegSite, SegmentVrf, HubSiteVrf
 from pynetbox import api
 # import nbox_get_ip
@@ -8,45 +10,71 @@ PARENT_PREFIX_ID = 8
 PREFIX_LENGTH = 29
 DESCRIPTION = "vrf_xxxxx_subnet"
 
-def get_next_available_prefix(netbox_url, parent_prefix_id, prefix_length, description=None):
-    """
-    Get the next available prefix from a parent prefix in NetBox.
+# def get_next_available_prefix(netbox_url, parent_prefix_id, prefix_length, description=None):
+#     """
+#     Get the next available prefix from a parent prefix in NetBox.
 
-    Args:
-        netbox_url (str): The NetBox API URL.
-        parent_prefix_id (int): The ID of the parent prefix.
-        prefix_length (int): The desired prefix length (e.g., 29).
-        description (str, optional): Description for the new prefix.
+#     Args:
+#         netbox_url (str): The NetBox API URL.
+#         parent_prefix_id (int): The ID of the parent prefix.
+#         prefix_length (int): The desired prefix length (e.g., 29).
+#         description (str, optional): Description for the new prefix.
 
-    Returns:
-        dict: Details of the newly created prefix, or None if failed.
-    """
-    try:
-        netbox_token = os.getenv("NETBOX_TOKEN")
-        if not netbox_token:
-            print("NETBOX_TOKEN environment variable is not set.")
-            return None
+#     Returns:
+#         dict: Details of the newly created prefix, or None if failed.
+#     """
+#     try:
+#         netbox_token = os.getenv("NETBOX_TOKEN")
+#         if not netbox_token:
+#             print("NETBOX_TOKEN environment variable is not set.")
+#             return None
 
-        # Connect to NetBox
-        netbox = api(netbox_url, token=netbox_token)
+#         # Connect to NetBox
+#         netbox = api(netbox_url, token=netbox_token)
 
-        # Get the parent prefix
-        prefix = netbox.ipam.prefixes.get(parent_prefix_id)
-        if not prefix:
-            print(f"Parent prefix with ID {parent_prefix_id} not found.")
-            return None
+#         # Get the parent prefix
+#         prefix = netbox.ipam.prefixes.get(parent_prefix_id)
+#         if not prefix:
+#             print(f"Parent prefix with ID {parent_prefix_id} not found.")
+#             return None
 
-        # Create the next available prefix
-        new_prefix = prefix.available_prefixes.create({
-            "prefix_length": prefix_length,
-            "description": description or "auto-assigned"
-        })
+#         # Create the next available prefix
+#         new_prefix = prefix.available_prefixes.create({
+#             "prefix_length": prefix_length,
+#             "description": description or "auto-assigned"
+#         })
 
-        return new_prefix
+#         return new_prefix
 
-    except Exception as e:
-        print(f"Error while retrieving/creating prefix: {e}")
-        return None
+#     except Exception as e:
+#         print(f"Error while retrieving/creating prefix: {e}")
+#         return None
+
+
+def get_and_create_next_prefix(prefix_id, length, description):
+    """Get the next available prefix using pynetbox, then create it via Django ORM."""
+    netbox_token = os.getenv("NETBOX_TOKEN")
+    if not netbox_token:
+        raise ValueError("NETBOX_TOKEN not set")
+
+    netbox = api(NETBOX_URL, token=netbox_token)
+    parent_prefix = netbox.ipam.prefixes.get(prefix_id)
+    if not parent_prefix:
+        raise ValueError(f"Parent prefix ID {prefix_id} not found")
+
+    # Get available prefix from REST API
+    available = parent_prefix.available_prefixes.list()
+    for candidate in available:
+        if candidate['prefix'].endswith(f"/{length}"):
+            # Create in NetBox DB via ORM
+            new_prefix = Prefix.objects.create(
+                prefix=candidate['prefix'],
+                description=description
+            )
+            return new_prefix
+
+    raise ValueError(f"No available /{length} prefix found in parent {prefix_id}")
+
 
 class NewManagementVrfScript(Script):
 
@@ -118,13 +146,12 @@ class NewManagementVrfScript(Script):
 
 
         hub1_vrf_instance = HubSiteVrf.objects.create(
-            vrf_name=mgmt_vrf_instance,
-            hub_site=data['priority_one_hub_site'],
-            vrf_to_vdom_subnet = get_next_available_prefix(NETBOX_URL, PARENT_PREFIX_ID, PREFIX_LENGTH, DESCRIPTION),
-            inter_vdom_subnet =  get_next_available_prefix(NETBOX_URL, PARENT_PREFIX_ID, PREFIX_LENGTH, DESCRIPTION),  
-            vdom_loopback =  get_next_available_prefix(NETBOX_URL, PARENT_PREFIX_ID, PREFIX_LENGTH, DESCRIPTION),            
-            deployment_status=data['deployment_status']
+             vrf_name=mgmt_vrf_instance,
+             hub_site=data['priority_one_hub_site'],
+             vrf_to_vdom_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vrf_to_vdom_subnet"),
+             inter_vdom_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "inter_vdom_subnet"),
+             vdom_loopback=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vdom_loopback"),
+             deployment_status=data['deployment_status']
+)
            
-           
-        )
         self.log_success(f"New Mgmt VRF {hub1_vrf_instance.vrf_name} is created for site - {hub1_vrf_instance.hub_site}")
