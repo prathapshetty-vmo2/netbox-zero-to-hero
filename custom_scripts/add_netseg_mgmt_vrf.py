@@ -79,11 +79,11 @@ class NewManagementVrfScript(Script):
         description="Select the site where the Hub VRF will be provisioned"
     )
 
-    vrf_spoke_sites = ObjectVar(
-        model=NetSegSite,
-        required=False,
-        description="Select the site where the Spoke VRF will be provisioned"
-    )
+    vrf_spoke_sites = MultiObjectVar(
+      model=NetSegSite,
+      required=False,
+       description="Select one or more sites where the Spoke VRF will be provisioned"
+      )
    
     deployment_status =  StringVar(
         description="Add status"
