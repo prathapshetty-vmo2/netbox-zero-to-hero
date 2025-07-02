@@ -123,11 +123,11 @@ class NewManagementVrfScript(Script):
         # Create the new VRF and associate it with the selected site
         time.sleep(5)
         vrf_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vrf_to_vdom_subnet")
-        time.sleep(5)
+        
         vdom_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "inter_vdom_subnet")
-        time.sleep(5)
+       
         vdom_loopback=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vdom_loopback")
-        time.sleep(5)
+  
         vrf = SegmentVrf.objects.create(
             name=data['vrf_name'],
             vrf_vpn_id=data['vpn_id'],
