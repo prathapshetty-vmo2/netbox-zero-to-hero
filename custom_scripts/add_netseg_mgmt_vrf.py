@@ -142,7 +142,7 @@ class NewManagementVrfScript(Script):
            for spoke_vrf in data['vrf_spoke_sites']:
               spoke_vrf_inst = SpokeSiteVrf.objects.create(
                   name = spoke_vrf,
-                  vrf_name=mgmt_vrf_instance,
+                  mgmt_vrf=mgmt_vrf_instance,
  
               )
               self.log_success(f"New Mgmt VRF {spoke_vrf_inst.name} is created for site - {spoke_vrf.name}")    
