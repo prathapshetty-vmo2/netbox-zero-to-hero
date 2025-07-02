@@ -53,29 +53,25 @@ DESCRIPTION = "vrf_xxxxx_subnet"
 
 
 def get_and_create_next_prefix(prefix_id, length, description):
-    """Get the next available prefix using pynetbox, then create it via Django ORM."""
+    """Reserve the next available prefix via pynetbox, then fetch it in the DB for ORM use."""
     netbox_token = os.getenv("NETBOX_TOKEN")
     if not netbox_token:
         raise ValueError("NETBOX_TOKEN not set")
 
     netbox = api(NETBOX_URL, token=netbox_token)
-    parent_prefix = netbox.ipam.prefixes.get(prefix_id)
-    print(parent_prefix)
-    if not parent_prefix:
+    parent = netbox.ipam.prefixes.get(prefix_id)
+    if not parent:
         raise ValueError(f"Parent prefix ID {prefix_id} not found")
 
-    # Get available prefix from REST API
-    available = parent_prefix.available_prefixes.list()
-    for candidate in available:
-        if candidate['prefix'].endswith(f"/{length}"):
-            # Create in NetBox DB via ORM
-            new_prefix = Prefix.objects.create(
-                prefix=candidate['prefix'],
-                description=description
-            )
-            return new_prefix
+    # Reserve the next prefix (NetBox will mark it as used)
+    new_api_prefix = parent.available_prefixes.create({
+        "prefix_length": length,
+        "description": description
+    })
 
-    raise ValueError(f"No available /{length} prefix found in parent {prefix_id}")
+    # Fetch the matching prefix via ORM
+    return Prefix.objects.get(prefix=new_api_prefix.prefix)
+
 
 
 class NewManagementVrfScript(Script):
