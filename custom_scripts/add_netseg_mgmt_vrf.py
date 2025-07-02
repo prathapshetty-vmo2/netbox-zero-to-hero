@@ -107,12 +107,15 @@ class NewManagementVrfScript(Script):
             priority_one_hub_site=data['priority_one_hub_site'],
             priority_two_hub_site=data['priority_two_hub_site'],
             priority_three_hub_site=data['priority_three_hub_site'],
-            vrf_spoke_sites=set(spoke_sites),
+            # vrf_spoke_sites=set(spoke_sites),
             deployment_status=data['deployment_status'],
-           
-           
-        )
+         )
+        # Now assign the many-to-many field
+        if data.get('vrf_spoke_sites'):
+            mgmt_vrf_instance.vrf_spoke_sites.set(data['vrf_spoke_sites'])
+        
         self.log_success(f"new Mgmt VRF {mgmt_vrf_instance.vrf_name} instance is created")
+        
 
 
         hub1_vrf_instance =  ManagementVrf.objects.create(
