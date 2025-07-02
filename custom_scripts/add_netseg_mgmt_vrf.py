@@ -103,7 +103,7 @@ class NewManagementVrfScript(Script):
         self.log_success(f"VRF {vrf.name} created")
 
         mgmt_vrf_instance =  ManagementVrf.objects.create(
-            vrf_name=data['vrf_name'],
+            vrf_name=vrf,
             priority_one_hub_site=data['priority_one_hub_site'],
             priority_two_hub_site=data['priority_two_hub_site'],
             priority_three_hub_site=data['priority_three_hub_site'],
@@ -116,7 +116,7 @@ class NewManagementVrfScript(Script):
 
 
         hub1_vrf_instance =  ManagementVrf.objects.create(
-            vrf_name=mgmt_vrf_instance.vrf_name,
+            vrf_name=mgmt_vrf_instance,
             hub_site=data['priority_one_hub_site'],
             vrf_to_vdom_subnet = get_next_available_prefix(NETBOX_URL, PARENT_PREFIX_ID, PREFIX_LENGTH, DESCRIPTION),
             inter_vdom_subnet =  get_next_available_prefix(NETBOX_URL, PARENT_PREFIX_ID, PREFIX_LENGTH, DESCRIPTION),  
