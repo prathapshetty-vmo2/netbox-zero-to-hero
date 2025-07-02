@@ -107,6 +107,7 @@ class NewManagementVrfScript(Script):
         hub1_vrf_instance = HubSiteVrf.objects.create(
              vrf_name=mgmt_vrf_instance,
              hub_site=data['priority_one_hub_site'],
+             vrf_site_priority = 1,
              vrf_to_vdom_subnet= get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vrf_to_vdom_subnet"),
              inter_vdom_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "inter_vdom_subnet")  ,
              vdom_loopback=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vdom_loopback"),
@@ -118,6 +119,7 @@ class NewManagementVrfScript(Script):
         hub2_vrf_instance = HubSiteVrf.objects.create(
              vrf_name=mgmt_vrf_instance,
              hub_site=data['priority_two_hub_site'],
+             vrf_site_priority = 2,
              vrf_to_vdom_subnet= get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vrf_to_vdom_subnet"),
              inter_vdom_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "inter_vdom_subnet")  ,
              vdom_loopback=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vdom_loopback"),
@@ -130,6 +132,7 @@ class NewManagementVrfScript(Script):
             hub3_vrf_instance = HubSiteVrf.objects.create(
              vrf_name=mgmt_vrf_instance,
              hub_site=data['priority_three_hub_site'],
+             vrf_site_priority = 3,
              vrf_to_vdom_subnet= get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vrf_to_vdom_subnet"),
              inter_vdom_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "inter_vdom_subnet")  ,
              vdom_loopback=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vdom_loopback"),
@@ -146,5 +149,5 @@ class NewManagementVrfScript(Script):
                   spoke_targets=[],
                   build_status =data['deployment_status']
  
-                 )
-              self.log_success(f"New Mgmt VRF {spoke_vrf_inst.name} is created for site - {spoke_vrf.name}")                                                      
+              )
+              self.log_success(f"New Mgmt VRF {spoke_vrf_inst.name} is created for site - {spoke_vrf.name}")  
