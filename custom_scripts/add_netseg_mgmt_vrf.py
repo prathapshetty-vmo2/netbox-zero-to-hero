@@ -107,7 +107,7 @@ class NewManagementVrfScript(Script):
             priority_one_hub_site=data['priority_one_hub_site'],
             priority_two_hub_site=data['priority_two_hub_site'],
             priority_three_hub_site=data['priority_three_hub_site'],
-            vrf_spoke_sites=spoke_sites.set(),
+            vrf_spoke_sites=set(spoke_sites),
             deployment_status=data['deployment_status'],
            
            
