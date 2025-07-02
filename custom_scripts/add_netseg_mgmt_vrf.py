@@ -118,7 +118,7 @@ class NewManagementVrfScript(Script):
 
 
         hub1_vrf_instance = HubSiteVrf.objects.create(
-            vrf_name=vrf,
+            vrf_name=mgmt_vrf_instance,
             hub_site=data['priority_one_hub_site'],
             vrf_to_vdom_subnet = get_next_available_prefix(NETBOX_URL, PARENT_PREFIX_ID, PREFIX_LENGTH, DESCRIPTION),
             inter_vdom_subnet =  get_next_available_prefix(NETBOX_URL, PARENT_PREFIX_ID, PREFIX_LENGTH, DESCRIPTION),  
