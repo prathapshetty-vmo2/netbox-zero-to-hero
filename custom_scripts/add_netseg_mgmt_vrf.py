@@ -2,6 +2,7 @@ from extras.scripts import *
 # from dcim.models import Site
 from ipam.models import Prefix
 import os
+import time
 from netbox_netseg_automation.models import ManagementVrf, NetSegSite, SegmentVrf, HubSiteVrf
 from pynetbox import api
 # import nbox_get_ip
@@ -59,6 +60,7 @@ def get_and_create_next_prefix(prefix_id, length, description):
 
     netbox = api(NETBOX_URL, token=netbox_token)
     parent_prefix = netbox.ipam.prefixes.get(prefix_id)
+    print(parent_prefix)
     if not parent_prefix:
         raise ValueError(f"Parent prefix ID {prefix_id} not found")
 
@@ -123,9 +125,13 @@ class NewManagementVrfScript(Script):
         # selected_site = data['site']
 
         # Create the new VRF and associate it with the selected site
+        time.sleep(5)
         vrf_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vrf_to_vdom_subnet")
+        time.sleep(5)
         vdom_subnet=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "inter_vdom_subnet")
+        time.sleep(5)
         vdom_loopback=get_and_create_next_prefix(PARENT_PREFIX_ID, PREFIX_LENGTH, "vdom_loopback")
+        time.sleep(5)
         vrf = SegmentVrf.objects.create(
             name=data['vrf_name'],
             vrf_vpn_id=data['vpn_id'],
