@@ -7,7 +7,7 @@ from netbox_netseg_automation.models import ManagementVrf, NetSegSite, SegmentVr
 from pynetbox import api
 # import nbox_get_ip
 NETBOX_URL = 'http://192.168.0.105:8000/'
-PARENT_PREFIX_ID = 8
+PARENT_PREFIX_ID = 148
 PREFIX_LENGTH = 29
 DESCRIPTION = "vrf_xxxxx_subnet"
 
